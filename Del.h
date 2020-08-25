@@ -9,9 +9,25 @@
 class Del
 {
 public:
-    Del(int address);
+    Del();
+
     void set(bool value);
+    bool get();
+
+    void setBlinking(bool state);
+    bool getBlinking();
+
+    void setBlinkingInterval(unsigned long interval);
+    unsigned long getBlinkingInterval();
+
+    void refresh();
+
+protected:
+    virtual void changeState(bool value){};
+
 private:
- int _address;
+    unsigned long _blinkInterval;
+    bool _value;
+    bool _blinking;
 };
 #endif
