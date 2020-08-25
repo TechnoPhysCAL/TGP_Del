@@ -1,12 +1,12 @@
-#include "DelPin.h"
+#include "DELPin.h"
 
-DelPin::DelPin(int address) : Del()
+DELPin::DELPin(int address) : DEL()
 {
   _address = address;
   pinMode(_address, OUTPUT);
 }
 
-void DelPin::changeState(bool state)
+void DELPin::changeState(bool state)
 {
   digitalWrite(_address, state ? HIGH : LOW);
 }

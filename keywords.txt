@@ -6,7 +6,7 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-DelPin	KEYWORD1
+DELPin	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)

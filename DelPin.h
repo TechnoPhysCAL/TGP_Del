@@ -1,15 +1,15 @@
-#ifndef DelPin_h
-#define DelPin_h
+#ifndef DELPin_h
+#define DELPin_h
 
-#include "Del.h"
+#include "DEL.h"
 
 /******************************************************************************
 * Definitions
 ******************************************************************************/
-class DelPin : public Del
+class DELPin : public DEL
 {
 public:
-    DelPin(int address);
+    DELPin(int address);
 
 protected:
     void changeState(bool);

@@ -1,4 +1,4 @@
-= Librairie Del =
+= Librairie DEL =
 
 Copyright (C) 2020 - Technologie du génie physique - Cégep André-Laurendeau
 

@@ -1,15 +1,15 @@
-#ifndef Del_h
-#define Del_h
+#ifndef DEL_h
+#define DEL_h
 
 #include "Arduino.h"
 
 /******************************************************************************
 * Definitions
 ******************************************************************************/
-class Del
+class DEL
 {
 public:
-    Del();
+    DEL();
 
     void set(bool value);
     bool get();

@@ -1,39 +1,39 @@
-#include "Del.h"
+#include "DEL.h"
 
-Del::Del()
+DEL::DEL()
 {
   _value = false;
   _blinkInterval = 250;
   _blinking = false;
 }
 
-void Del::set(bool value)
+void DEL::set(bool value)
 {
   _value = value;
 }
-bool Del::get()
+bool DEL::get()
 {
   return _value;
 }
-void Del::setBlinking(bool state)
+void DEL::setBlinking(bool state)
 {
   _blinking = state;
 }
-bool Del::getBlinking()
+bool DEL::getBlinking()
 {
   return _blinking;
 }
 
-void Del::setBlinkingInterval(unsigned long interval)
+void DEL::setBlinkingInterval(unsigned long interval)
 {
   _blinkInterval = interval == 0 ? 1 : interval;
 }
-unsigned long Del::getBlinkingInterval()
+unsigned long DEL::getBlinkingInterval()
 {
   return _blinkInterval;
 }
 
-void Del::refresh()
+void DEL::refresh()
 {
   if (_value)
   {
