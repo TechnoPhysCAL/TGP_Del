@@ -3,8 +3,10 @@
 DEL::DEL()
 {
   _value = false;
-  _blinkInterval = 250;
+  
   _blinking = false;
+  _blinkInterval = DEFAULT_BLINKING_INTERVAL;
+  
 }
 
 void DEL::set(bool value)

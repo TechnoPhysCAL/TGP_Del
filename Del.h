@@ -1,6 +1,8 @@
 #ifndef DEL_h
 #define DEL_h
 
+#define DEFAULT_BLINKING_INTERVAL 250
+
 #include "Arduino.h"
 
 /******************************************************************************
