@@ -40,6 +40,8 @@ void DelBase::setBrightness(float value)
   {
     _brightness = value;
   }
+
+
 }
 
 float DelBase::getBrightness()
