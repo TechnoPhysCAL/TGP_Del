@@ -19,6 +19,8 @@ setBlinking	KEYWORD2
 getBlinking	KEYWORD2
 setBlinkingInterval	KEYWORD2
 getBlinkingInterval	KEYWORD2
+setBrightness	KEYWORD2
+getBrightness	KEYWORD2
 
 ######################################
 # Constants (LITERAL1)
