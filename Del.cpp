@@ -23,7 +23,15 @@ Del::Del(int address) : DelBase()
 #endif
 }
 
+int Del::getAddress(){
+  return _address;
+}
+
 #ifdef ESP_PLATFORM
+int Del::getChannel(){
+  return _channel;
+}
+
 void Del::changeState(bool state, float brightness)
 {
   digitalWrite(_address, state ? HIGH : LOW);
