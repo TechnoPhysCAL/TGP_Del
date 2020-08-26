@@ -31,19 +31,20 @@ int Del::getAddress(){
 int Del::getChannel(){
   return _channel;
 }
+#endif
 
 void Del::changeState(bool state, float brightness)
 {
+  #ifdef ESP_PLATFORM
+  
   digitalWrite(_address, state ? HIGH : LOW);
   if (_channel >= 0)
   {
     ledcWrite(_channel, (int)(brightness * PWM_MAXIMUM_FACTOR));
   }
-}
-#else
-void Del::changeState(bool state, float brightness)
-{
-  analogWrite(_address, state ? (brightness * 2.55) : 0.0);
-}
 
-#endif
+  #else
+  analogWrite(_address, state ? (brightness * 2.55) : 0.0);
+ 
+  #endif
+}
