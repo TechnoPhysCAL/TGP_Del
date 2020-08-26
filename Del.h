@@ -1,40 +1,34 @@
-#ifndef DEL_h
-#define DEL_h
+#ifndef Del_h
+#define Del_h
 
-#define DEFAULT_BLINKING_INTERVAL 250
-#define DEFAULT_BRIGHTNESS 100.0
+#include "DelBase.h"
 #include "Arduino.h"
+
+#ifdef ESP_PLATFORM
+
+#define PWM_MAX_CHANNEL 16
+#define PWM_FREQUENCY 5000 //Fréquence du PWM
+#define PWM_RESOLUTION 8   //Résolution 8 bits; duty cycle de 0 à 255
+#define PWM_MAXIMUM_FACTOR 2.55
+
+#endif
 
 /******************************************************************************
 * Definitions
 ******************************************************************************/
-class DEL
+class Del : public DelBase
 {
 public:
-    DEL();
-
-    void set(bool);
-    bool get();
-
-    void setBlinking(bool);
-    bool getBlinking();
-
-    void setBrightness(float);
-    float getBrightness();
-
-    void setBlinkingInterval(unsigned long);
-    unsigned long getBlinkingInterval();
-
-    void refresh();
+    Del(int address);
 
 protected:
-    virtual void changeState(bool,float){};
- 
+    void changeState(bool,float);
+  
 
 private:
-    unsigned long _blinkInterval;
-    bool _value;
-    bool _blinking;
-    float _brightness;
+    int _address;
+#ifdef ESP_PLATFORM
+    int _channel;
+#endif
 };
 #endif

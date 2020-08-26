@@ -7,13 +7,13 @@
 
 */
 
-#include <DELPin.h> //Pour utiliser la librairie DELPin
+#include <Del.h> //Pour utiliser la librairie Del
 
 const int pinA = 4; //Le numéro du port de la DEL A.
 const int pinB = 2; //Le numéro du port de la DEL B.
 
-DELPin maDELA(pinA); // Initialisation de la DEL A sur le port choisi
-DELPin maDELB(pinB); // Initialisation de la DEL B sur le port choisi
+Del maDELA(pinA); // Initialisation de la DEL A sur le port choisi
+Del maDELB(pinB); // Initialisation de la DEL B sur le port choisi
 
 void setup()
 {

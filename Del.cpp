@@ -1,76 +1,41 @@
-#include "DEL.h"
+#include "Del.h"
 
-DEL::DEL()
+Del::Del(int address) : DelBase()
 {
-  _value = false;
+  _address = address;
+  pinMode(_address, OUTPUT);
 
-  _blinking = false;
-  _blinkInterval = DEFAULT_BLINKING_INTERVAL;
-  _brightness = DEFAULT_BRIGHTNESS;
-}
-
-void DEL::set(bool value)
-{
-  _value = value;
-}
-bool DEL::get()
-{
-  return _value;
-}
-void DEL::setBlinking(bool state)
-{
-  _blinking = state;
-}
-bool DEL::getBlinking()
-{
-  return _blinking;
-}
-
-void DEL::setBrightness(float value)
-{
-  if (value < 0.0)
+#ifdef ESP_PLATFORM
+  static int objectCount =0;
+  if (objectCount < PWM_MAX_CHANNEL)
   {
-    _brightness = 0.0;
-  }
-  else if (value > 100.0)
-  {
-    _brightness = 100.0;
+    _channel = objectCount;
+    objectCount++;
+    ledcSetup(_address, PWM_FREQUENCY, PWM_RESOLUTION);
+    ledcAttachPin(_address, _channel);
+    ledcWrite(_channel, (int)(getBrightness() * PWM_MAXIMUM_FACTOR)); //duty Cycle de 0
   }
   else
   {
-    _brightness = value;
+    _channel = -1;
   }
+
+#endif
 }
 
-float DEL::getBrightness()
+#ifdef ESP_PLATFORM
+void Del::changeState(bool state, float brightness)
 {
-  return _brightness;
-}
-
-void DEL::setBlinkingInterval(unsigned long interval)
-{
-  _blinkInterval = interval == 0 ? 1 : interval;
-}
-unsigned long DEL::getBlinkingInterval()
-{
-  return _blinkInterval;
-}
-
-void DEL::refresh()
-{
-  if (_value)
+  digitalWrite(_address, state ? HIGH : LOW);
+  if (_channel >= 0)
   {
-    if (_blinking)
-    {
-      changeState(((millis() % (_blinkInterval * 2)) > _blinkInterval), _brightness);
-    }
-    else
-    {
-      changeState(true, _brightness);
-    }
-  }
-  else
-  {
-    changeState(false, _brightness);
+    ledcWrite(_channel, (int)(brightness * PWM_MAXIMUM_FACTOR));
   }
 }
+#else
+void Del::changeState(bool state, float brightness)
+{
+  analogWrite(_address, state ? (brightness * 2.55) : 0.0);
+}
+
+#endif

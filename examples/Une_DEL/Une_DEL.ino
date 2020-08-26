@@ -7,11 +7,11 @@
 
 */
 
-#include <DELPin.h> //Pour utiliser la librairie DELPin
+#include <Del.h> //Pour utiliser la librairie Del
 
 const int pin = LED_BUILTIN; //Le numéro du port de la DEL, ici la DEL par défaut sur le board.
 
-DELPin maDEL(pin); // Initialisation de la DEL sur le port choisi
+Del maDEL(pin); // Initialisation de la DEL sur le port choisi
 
 void setup()
 {
