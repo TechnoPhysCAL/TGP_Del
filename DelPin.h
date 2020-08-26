@@ -2,6 +2,7 @@
 #define DELPin_h
 
 #include "DEL.h"
+#include "Arduino.h"
 
 /******************************************************************************
 * Definitions
