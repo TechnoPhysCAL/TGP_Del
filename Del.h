@@ -21,13 +21,13 @@ class Del : public DelBase
 public:
     Del(int address);
     int getAddress();
-    
- #ifdef ESP_PLATFORM
+
+#ifdef ESP_PLATFORM
     int getChannel();
 #endif
 protected:
-    void changeState(bool,float);
-  
+    void changeState(bool, float);
+    void changeFrequency(double);
 
 private:
     int _address;

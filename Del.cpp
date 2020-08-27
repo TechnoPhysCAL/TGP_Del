@@ -44,10 +44,24 @@ void Del::changeState(bool state, float brightness)
   {
     ledcWrite(_channel, state ? (int)(getBrightness() * PWM_MAXIMUM_FACTOR) : 0.0);
   }
-  
 
 #else
   analogWrite(_address, state ? (brightness * 2.55) : 0.0);
 
+#endif
+}
+
+void Del::changeFrequency(double frequency)
+{
+
+#ifdef ESP_PLATFORM
+
+  if (_channel >= 0)
+  {
+    ledcWriteTone(_channel, frequency);
+  }
+
+#else
+  //rien pour l'arduino..?
 #endif
 }
