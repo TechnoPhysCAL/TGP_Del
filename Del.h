@@ -27,7 +27,6 @@ public:
 #endif
 protected:
     void changeState(bool, float);
-    void changeFrequency(double);
 
 private:
     int _address;

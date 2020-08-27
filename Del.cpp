@@ -50,18 +50,3 @@ void Del::changeState(bool state, float brightness)
 
 #endif
 }
-
-void Del::changeFrequency(double frequency)
-{
-
-#ifdef ESP_PLATFORM
-
-  if (_channel >= 0)
-  {
-    ledcWriteTone(_channel, frequency);
-  }
-
-#else
-  //rien pour l'arduino..?
-#endif
-}
