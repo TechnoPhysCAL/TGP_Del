@@ -3,7 +3,7 @@
 Del::Del(int address) : DelBase()
 {
   _address = address;
-  pinMode(_address, OUTPUT);
+  
 
 #ifdef ESP_PLATFORM
   static int objectCount = FIRST_CHANNEL;
@@ -11,15 +11,17 @@ Del::Del(int address) : DelBase()
   {
     _channel = objectCount;
     objectCount++;
-    ledcSetup(_channel, PWM_FREQUENCY, PWM_RESOLUTION);
-    ledcAttachPin(_address, _channel);
-    ledcWrite(_channel, (int)(getBrightness() * PWM_MAXIMUM_FACTOR)); //duty Cycle de 0
+    objectCount++;
+    ledcSetup(getChannel(), PWM_FREQUENCY, PWM_RESOLUTION);
+    ledcAttachPin(_address, getChannel());
+    ledcWrite(getChannel(), (int)(getBrightness() * PWM_MAXIMUM_FACTOR)); //duty Cycle de 0
   }
   else
   {
     _channel = -1;
   }
-
+#else
+  pinMode(_address, OUTPUT);
 #endif
 }
 
@@ -40,9 +42,9 @@ void Del::changeState(bool state, float brightness)
 
 #ifdef ESP_PLATFORM
 
-  if (_channel >= 0)
+  if (getChannel() >= 0)
   {
-    ledcWrite(_channel, state ? (int)(getBrightness() * PWM_MAXIMUM_FACTOR) : 0.0);
+    ledcWrite(getChannel(), state ? (int)(getBrightness() * PWM_MAXIMUM_FACTOR) : 0.0);
   }
 
 #else

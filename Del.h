@@ -6,7 +6,7 @@
 
 #ifdef ESP_PLATFORM
 
-#define FIRST_CHANNEL 4
+#define FIRST_CHANNEL 0
 
 #define PWM_MAX_CHANNEL 16
 #define PWM_FREQUENCY 5000 //Fréquence du PWM
