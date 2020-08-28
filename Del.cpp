@@ -6,7 +6,7 @@ Del::Del(int address) : DelBase()
   pinMode(_address, OUTPUT);
 
 #ifdef ESP_PLATFORM
-  static int objectCount = 0;
+  static int objectCount = FIRST_CHANNEL;
   if (objectCount < PWM_MAX_CHANNEL)
   {
     _channel = objectCount;
