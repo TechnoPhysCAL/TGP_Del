@@ -46,7 +46,7 @@ Cette méthode doit être placée en début de boucle loop(): elle permet de met
 void set(bool value) 
 bool get()
 ```
-Permet de lire et écrire l'état de la del (allumée ou éteinte).
+Permet de lire et modifier l'état de la del (allumée ou éteinte).
 
 ---
 
@@ -54,14 +54,14 @@ Permet de lire et écrire l'état de la del (allumée ou éteinte).
 void setBlinking(bool value)
 bool getBlinking()
 ```
-Permet de lire et écrire le mode clignotement (activé ou non). Même si le mode clignotement est activé, cela n'allume pas pour autant la del.
+Permet de lire et modifier le mode clignotement (activé ou non). Même si le mode clignotement est activé, cela n'allume pas pour autant la del.
 
 ---
 ```cpp
 void voidsetBlinkingInterval(unsigned long value)
 unsigned long getBlinkingInterval()
 ```
-Permet de lire et écrire le temps d'intervalle du clignotement, en millisecondes.
+Permet de lire et modifier le temps d'intervalle du clignotement, en millisecondes.
 
 ---
 ```cpp
@@ -69,7 +69,7 @@ void setBrightness(float value)
 float getBrightness()
 ```
 
-Permet de lire et écrire l'intensité lumineuse de la del, entre 0 et 100%. Selon le microcontrôleur utilisé, un signal PWM est utilisé pour modifier l'intensité lumineuse produite.
+Permet de lire et modifier l'intensité lumineuse de la del, entre 0 et 100%. Selon le microcontrôleur utilisé, un signal PWM est utilisé pour modifier l'intensité lumineuse produite.
 
 ---
 ```cpp
