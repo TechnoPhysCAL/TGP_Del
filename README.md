@@ -28,6 +28,12 @@ void loop()
 }
 ```
 
+## Constructeurs
+```cpp
+Del(int pin)
+```
+On spécifie le numéro de la broche sur lequel est branché la Del.
+
 ## Méthodes disponibles
 
 
