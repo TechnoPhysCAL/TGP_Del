@@ -58,7 +58,7 @@ Permet de lire et modifier le mode clignotement (activé ou non). Même si le mo
 
 ---
 ```cpp
-void voidsetBlinkingInterval(unsigned long value)
+void setBlinkingInterval(unsigned long value)
 unsigned long getBlinkingInterval()
 ```
 Permet de lire et modifier le temps d'intervalle du clignotement, en millisecondes.
