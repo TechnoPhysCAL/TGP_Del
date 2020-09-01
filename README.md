@@ -1,4 +1,4 @@
-# Librairie TGL Del
+# Librairie TGP Del
 
 Permet le contrôle d'une diode électroluminescente (DEL) pour Arduino. Outre son état, on peut la mettre en mode clignotant, ajuster le délai et modifier son intensité lumineuse. Son mode de fonctionnement est non-bloquant.
 
@@ -23,8 +23,6 @@ void setup()
 void loop()
 {
   maDEL.refresh(); 
-
- 
 }
 ```
 
