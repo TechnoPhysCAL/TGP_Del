@@ -14,7 +14,7 @@ Del maDEL(pin);
 
 void setup()
 {
-    maDel.set(true);
+    maDel.on();
     maDel.setBlinking(true);
     maDel.setBlinkingItnerval(250);
     maDel.setBrightness(100);
@@ -22,7 +22,8 @@ void setup()
 
 void loop()
 {
-  maDEL.refresh(); 
+  maDEL.refresh();
+
 }
 ```
 
@@ -41,7 +42,13 @@ On spécifie le numéro de la broche sur lequel est branché la Del.
 Cette méthode doit être placée en début de boucle loop(): elle permet de mettre à jour l'état de la DEL sans bloquer l'exécution du reste de la boucle.
 
 ---
+```cpp
+ void on()
+ void off()
+```
+Ces méthodes permettent respectivement d'allumer ou d'éteindre la del. Elles sont équivalentes à set(true) et set(false).
 
+---
 ```cpp
 void set(bool value) 
 bool get()

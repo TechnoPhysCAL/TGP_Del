@@ -9,6 +9,15 @@ DelBase::DelBase()
   _brightness = DEFAULT_BRIGHTNESS;
 }
 
+void DelBase::on()
+{
+  DelBase::set(true);
+}
+void DelBase::off()
+{
+  DelBase::set(false);
+}
+
 void DelBase::set(bool value)
 {
   _value = value;
@@ -40,8 +49,6 @@ void DelBase::setBrightness(float value)
   {
     _brightness = value;
   }
-
-
 }
 
 float DelBase::getBrightness()

@@ -13,6 +13,9 @@ class DelBase
 public:
     DelBase();
 
+    void on();
+    void off();
+    
     void set(bool);
     bool get();
 
