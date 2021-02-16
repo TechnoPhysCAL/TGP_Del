@@ -16,7 +16,7 @@ void setup()
 {
     maDel.on();
     maDel.setBlinking(true);
-    maDel.setBlinkingItnerval(250);
+    maDel.setBlinkingInterval(250);
     maDel.setBrightness(100);
 }
 
