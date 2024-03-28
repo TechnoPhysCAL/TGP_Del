@@ -1,54 +1,85 @@
 #include "Del.h"
 
-Del::Del(int address) : DelBase()
+Del::Del()
 {
-  _address = address;
-  
+  _value = false;
 
-#ifdef ESP_PLATFORM
-  static int objectCount = FIRST_CHANNEL;
-  if (objectCount < PWM_MAX_CHANNEL)
+  _blinking = false;
+  _blinkInterval = DEFAULT_BLINKING_INTERVAL;
+  _brightness = DEFAULT_BRIGHTNESS;
+}
+
+void Del::on()
+{
+  Del::set(true);
+}
+void Del::off()
+{
+  Del::set(false);
+}
+
+void Del::set(bool value)
+{
+  _value = value;
+}
+bool Del::get()
+{
+  return _value;
+}
+void Del::setBlinking(bool state)
+{
+  _blinking = state;
+}
+bool Del::getBlinking()
+{
+  return _blinking;
+}
+
+void Del::setBrightness(float value)
+{
+  if (value < 0.0)
   {
-    _channel = objectCount;
-    objectCount++;
-    objectCount++;
-    ledcSetup(getChannel(), PWM_FREQUENCY, PWM_RESOLUTION);
-    ledcAttachPin(_address, getChannel());
-    ledcWrite(getChannel(), (int)(getBrightness() * PWM_MAXIMUM_FACTOR)); //duty Cycle de 0
+    _brightness = 0.0;
+  }
+  else if (value > 100.0)
+  {
+    _brightness = 100.0;
   }
   else
   {
-    _channel = -1;
+    _brightness = value;
   }
-#else
-  pinMode(_address, OUTPUT);
-#endif
 }
 
-int Del::getAddress()
+float Del::getBrightness()
 {
-  return _address;
+  return _brightness;
 }
 
-#ifdef ESP_PLATFORM
-int Del::getChannel()
+void Del::setBlinkingInterval(unsigned long interval)
 {
-  return _channel;
+  _blinkInterval = interval == 0 ? 1 : interval;
 }
-#endif
-
-void Del::changeState(bool state, float brightness)
+unsigned long Del::getBlinkingInterval()
 {
+  return _blinkInterval;
+}
 
-#ifdef ESP_PLATFORM
-
-  if (getChannel() >= 0)
+void Del::refresh(std::function<void(bool,float)> updater)
+{
+  if (_value)
   {
-    ledcWrite(getChannel(), state ? (int)(getBrightness() * PWM_MAXIMUM_FACTOR) : 0.0);
+    if (_blinking)
+    {
+      updater(((millis() % (_blinkInterval * 2)) > _blinkInterval), _brightness);
+    }
+    else
+    {
+      updater(true, _brightness);
+    }
   }
-
-#else
-  analogWrite(_address, state ? (brightness * 2.55) : 0.0);
-
-#endif
+  else
+  {
+    updater(false, _brightness);
+  }
 }
