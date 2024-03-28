@@ -3,6 +3,10 @@
 DelPin::DelPin(int address) : Del()
 {
   _address = address;
+  auto updater = [&]( float percentage)
+  { changeState(percentage); };
+  Del::setSignalUpdater(updater);
+
 }
 
 void DelPin::begin()
@@ -39,24 +43,18 @@ int DelPin::getChannel()
 }
 #endif
 
-void DelPin::refresh()
-{
-  auto updater = [&](bool state, float brightness)
-  { changeState(state, brightness); };
-  Del::refresh(updater);
-}
 
-void DelPin::changeState(bool state, float brightness)
+void DelPin::changeState(float brightness)
 {
 #ifdef ESP_PLATFORM
 
   if (getChannel() >= 0)
   {
-    ledcWrite(getChannel(), state ? (int)(getBrightness() * PWM_MAXIMUM_FACTOR) : 0.0);
+    ledcWrite(getChannel(), brightness>0 ? (int)(brightness * PWM_MAXIMUM_FACTOR) : 0.0);
   }
 
 #else
-  analogWrite(_address, state ? (brightness * 2.55) : 0.0);
+  analogWrite(_address, brightness>0 ? (brightness * 2.55) : 0.0);
 
 #endif
 }

@@ -7,6 +7,13 @@ Del::Del()
   _blinking = false;
   _blinkInterval = DEFAULT_BLINKING_INTERVAL;
   _brightness = DEFAULT_BRIGHTNESS;
+  _updater = [](float)
+  { ; };
+}
+
+void Del::setSignalUpdater(SignalUpdater func)
+{
+  _updater = func;
 }
 
 void Del::on()
@@ -65,21 +72,21 @@ unsigned long Del::getBlinkingInterval()
   return _blinkInterval;
 }
 
-void Del::refresh(std::function<void(bool,float)> updater)
+void Del::refresh()
 {
   if (_value)
   {
     if (_blinking)
     {
-      updater(((millis() % (_blinkInterval * 2)) > _blinkInterval), _brightness);
+      _updater(((millis() % (_blinkInterval * 2)) > _blinkInterval) ? _brightness : 0.0);
     }
     else
     {
-      updater(true, _brightness);
+      _updater(_brightness);
     }
   }
   else
   {
-    updater(false, _brightness);
+    _updater(0.0);
   }
 }

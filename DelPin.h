@@ -24,14 +24,13 @@ public:
     DelPin(int address);
     void begin();
     int getAddress();
-    void refresh();
 
 #ifdef ESP_PLATFORM
     int getChannel();
 #endif
 
 private:
-void changeState(bool, float);
+void changeState(float);
     int _address;
 #ifdef ESP_PLATFORM
     int _channel;

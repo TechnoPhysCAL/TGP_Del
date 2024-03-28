@@ -8,13 +8,14 @@
 */
 
 #include <DelPin.h> //Pour utiliser la librairie Del
-#define PIN_LED 34 //Le numéro du port de la DEL, ici la DEL par défaut sur le board.
+#define PIN_LED 4 //Le numéro du port de la DEL, ici la DEL par défaut sur le board.
 
 DelPin maDEL(PIN_LED); // Initialisation de la DEL sur le port choisi
 
 void setup()
 { 
   maDEL.begin();
+  maDEL.setBlinkingInterval(100);
 }
 
 void loop()
@@ -36,7 +37,7 @@ void loop()
   else if (curTime < 3000) {
     maDEL.set(true);
     maDEL.setBlinking(false);
-    maDEL.setBrightness((4000 - curTime) / 10.0);
+    maDEL.setBrightness((3000 - curTime) / 10.0);
   } 
   else {
     maDEL.set(false);
