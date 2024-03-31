@@ -1,33 +1,47 @@
 #include "DelPin.h"
 
+#ifdef ESP_PLATFORM
 DelPin::DelPin(int address) : Del()
+#else
+DelPin::DelPin(int address, int pwm_channel) : Del()
+#endif
 {
   _address = address;
-  auto updater = [&]( float percentage)
+  auto updater = [&](float percentage)
   { changeState(percentage); };
   Del::setSignalUpdater(updater);
 
+#ifdef ESP_PLATFORM
+  static int objectCount = FIRST_CHANNEL;
+  if (objectCount < PWM_MAX_CHANNEL)
+  {
+    if (channel >= 0)
+    {
+      _channel = pwm_channel;
+    }
+    else
+    {
+      _channel = objectCount;
+      objectCount++;
+      objectCount++;
+    }
+  }
+
+#endif
 }
 
 void DelPin::begin()
 {
 #ifdef ESP_PLATFORM
-  static int objectCount = FIRST_CHANNEL;
-  if (objectCount < PWM_MAX_CHANNEL)
+
+  if (DelPin::getChannel() >= 0)
   {
-    _channel = objectCount;
-    objectCount++;
-    objectCount++;
-    ledcSetup(getChannel(), PWM_FREQUENCY, PWM_RESOLUTION);
-    ledcAttachPin(_address, getChannel());
-    ledcWrite(getChannel(), (int)(getBrightness() * PWM_MAXIMUM_FACTOR)); // duty Cycle de 0
-  }
-  else
-  {
-    _channel = -1;
+    ledcSetup(DelPin::getChannel(), PWM_FREQUENCY, PWM_RESOLUTION);
+    ledcAttachPin(DelPin::getAdress(), DelPin::getChannel());
+    DelPin::changeState(DelPin::getBrightness()); // duty Cycle de 0
   }
 #else
-  pinMode(_address, OUTPUT);
+  pinMode(DelPin::getAddress(), OUTPUT);
 #endif
 }
 
@@ -43,18 +57,17 @@ int DelPin::getChannel()
 }
 #endif
 
-
-void DelPin::changeState(float brightness)
+void DelPin::changeState(float percentage)
 {
 #ifdef ESP_PLATFORM
 
-  if (getChannel() >= 0)
+  if (DelPin::getChannel() >= 0)
   {
-    ledcWrite(getChannel(), brightness>0 ? (int)(brightness * PWM_MAXIMUM_FACTOR) : 0.0);
+    ledcWrite(DelPin::getChannel(), percentage > 0 ? (int)(percentage * PWM_MAXIMUM_FACTOR) : 0.0);
   }
 
 #else
-  analogWrite(_address, brightness>0 ? (brightness * 2.55) : 0.0);
+  analogWrite(DelPin::getAddress(), percentage > 0 ? (percentage * 2.55) : 0.0);
 
 #endif
 }
