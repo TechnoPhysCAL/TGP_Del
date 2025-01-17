@@ -7,17 +7,19 @@
 
 */
 
-#include <Del.h> //Pour utiliser la librairie Del
+#include <DelPin.h> //Pour utiliser la librairie Del
 
-const int pinA = 4; //Le numéro du port de la DEL A.
-const int pinB = 2; //Le numéro du port de la DEL B.
+#define PIN_A 4 //Le numéro du port de la DEL A.
+#define PIN_B 2  //Le numéro du port de la DEL B.
 
-Del maDELA(pinA); // Initialisation de la DEL A sur le port choisi
-Del maDELB(pinB); // Initialisation de la DEL B sur le port choisi
+DelPin maDELA(PIN_A); // Initialisation de la DEL A sur le port choisi
+DelPin maDELB(PIN_B); // Initialisation de la DEL B sur le port choisi
 
 void setup()
 {
   maDELB.setBlinking(true); //Activer le mode clignotement pour la DEL B
+  maDELA.setBrightness(100);
+  maDELB.setBrightness(100);
 }
 
 void loop()

@@ -1,23 +1,23 @@
 #include "DelPin.h"
 
-#ifdef ESP_PLATFORM
-DelPin::DelPin(int address) : Del()
+#ifdef PATCH_OLD_ESP32
+DelPin::DelPin(int pinNumber,int channel) : Del()
 #else
-DelPin::DelPin(int address, int pwm_channel) : Del()
+DelPin::DelPin(int pinNumber) : Del()
 #endif
 {
-  _address = address;
+  _pinNumber = pinNumber;
   auto updater = [&](float percentage)
   { changeState(percentage); };
   Del::setSignalUpdater(updater);
 
-#ifdef ESP_PLATFORM
+  #ifdef PATCH_OLD_ESP32
   static int objectCount = FIRST_CHANNEL;
   if (objectCount < PWM_MAX_CHANNEL)
   {
     if (channel >= 0)
     {
-      _channel = pwm_channel;
+      _channel = channel;
     }
     else
     {
@@ -27,47 +27,40 @@ DelPin::DelPin(int address, int pwm_channel) : Del()
     }
   }
 
-#endif
+  #endif
 }
 
 void DelPin::begin()
 {
-#ifdef ESP_PLATFORM
-
-  if (DelPin::getChannel() >= 0)
-  {
-    ledcSetup(DelPin::getChannel(), PWM_FREQUENCY, PWM_RESOLUTION);
-    ledcAttachPin(DelPin::getAdress(), DelPin::getChannel());
-    DelPin::changeState(DelPin::getBrightness()); // duty Cycle de 0
-  }
+#if defined(PATCH_OLD_ESP32) 
+  ledcSetup(DelPin::getChannel(), PWM_FREQUENCY, PWM_RESOLUTION);
+  ledcAttachPin(DelPin::getPinNumber(), DelPin::getChannel());
+#elif defined(ESP_PLATFORM)
+  ledcAttach(DelPin::getPinNumber(), PWM_FREQUENCY, PWM_RESOLUTION);
 #else
-  pinMode(DelPin::getAddress(), OUTPUT);
+  pinMode(DelPin::getPinNumber(), OUTPUT);
 #endif
+  DelPin::changeState(DelPin::getBrightness());
 }
 
-int DelPin::getAddress()
+int DelPin::getPinNumber()
 {
-  return _address;
+  return _pinNumber;
 }
-
-#ifdef ESP_PLATFORM
-int DelPin::getChannel()
-{
-  return _channel;
-}
-#endif
 
 void DelPin::changeState(float percentage)
 {
-#ifdef ESP_PLATFORM
-
-  if (DelPin::getChannel() >= 0)
-  {
-    ledcWrite(DelPin::getChannel(), percentage > 0 ? (int)(percentage * PWM_MAXIMUM_FACTOR) : 0.0);
-  }
-
+#if defined(PATCH_OLD_ESP32)
+  ledcWrite(DelPin::getChannel(), percentage > 0 ? (int)(percentage * PWM_MAXIMUM_FACTOR) : 0.0);
+#elif defined(ESP_PLATFORM)
+  ledcWrite(DelPin::getPinNumber(), percentage > 0 ? (int)(percentage * PWM_MAXIMUM_FACTOR) : 0.0);
 #else
-  analogWrite(DelPin::getAddress(), percentage > 0 ? (percentage * 2.55) : 0.0);
-
+  analogWrite(DelPin::getPinNumber(), percentage > 0 ? (percentage * 2.55) : 0.0);
 #endif
 }
+
+#ifdef PATCH_OLD_ESP32
+int DelPin::getChannel(){
+  return DelPin::_channel;
+}
+#endif

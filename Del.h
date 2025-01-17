@@ -5,7 +5,11 @@
 #define DEFAULT_BRIGHTNESS 100.0
 #include "Arduino.h"
 
+#ifndef __AVR__
 typedef std::function<void(float)> SignalUpdater;
+#else
+typedef void (*SignalUpdater)(float);
+#endif
 /******************************************************************************
 * Definitions
 ******************************************************************************/
