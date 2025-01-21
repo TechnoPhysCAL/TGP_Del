@@ -4,6 +4,17 @@ Permet le contrôle d'une diode électroluminescente (DEL) pour Arduino. Outre s
 
 Il existe deux classes : DelPin.h pour une DEL branchée sur une broche, et Del.h, pour contrôler une DEL virtuelle où l'utilisateur aura la responsabilité de faire le contrôle matériel correspondant.
 
+
+## Notes de version
+
+### 2.0.0 : 
+ - Refonte pour que Del gère les comportements virtuels et que DelPin gère une Del matérielle.
+ - Permet l'utilisation de la Del générique via une fonction de référence;
+ - Permet l'utilisation des fonctions lambdas
+ - Mise à jour de la gestion des PWMs sur la version 3 de ESP32-Arduino
+ - Permettre le fonctionnement (PWM) sur la version antérieure 2 de ESP32-Arduino
+
+
 ## Utilisation
 
 Voici l'exemple simple avec une DEL branchée sur une broche.
@@ -12,9 +23,7 @@ Voici l'exemple simple avec une DEL branchée sur une broche.
 
 #include <DelPin.h> 
 
-#define PIN_LED LED_BUILTIN
-
-DelPin maDEL(PIN_LED); 
+DelPin maDEL(LED_BUILTIN); 
 
 void setup()
 {
@@ -33,14 +42,16 @@ void loop()
 
 ## Constructeurs
 ```cpp
+Del()
+Del(SignalUpdater updater);
+```
+Constructeur générique pour une DEL virtuelle, sans spécification matérielle. On peut aussi fournir une fonction qui aura la responsabilité de modifier matériellement la del; la fonction doit recevoir un float, qui correspond au pourcentage d'intensité voulu pour la 
+
+```cpp
 DelPin(int pin)
 ```
 On spécifie le numéro de la broche sur lequel est branché la Del.
 
-```cpp
-Del()
-```
-Constructeur générique pour une DEL virtuelle, sans spécification matérielle. 
 
 ## Méthodes disponibles
 
@@ -88,9 +99,9 @@ Permet de lire et modifier l'intensité lumineuse de la del, entre 0 et 100%.
 
 ---
 ```cpp
-void setSignalUpdater(SignalUpdater func)
+void setSignalUpdater(SignalUpdater updater)
 ```
-Permet de définir une fonction de mise à jour personnalisée pour la DEL. Cette fonction est appelée à chaque fois que la DEL est mise à jour.
+Permet de définir une fonction de mise à jour personnalisée pour la DEL. Cette fonction est appelée à chaque fois que la DEL est mise à jour. La fonction doit recevoir un float, qui correspond au pourcentage d'intensité voulu pour la del.
 
 ### Méthodes de DelPin.h
 
