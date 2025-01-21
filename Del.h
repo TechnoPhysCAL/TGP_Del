@@ -17,8 +17,9 @@ class Del
 {
 public:
     Del();
+    Del(SignalUpdater updater);
 
-    void setSignalUpdater(SignalUpdater func);
+    void setSignalUpdater(SignalUpdater updater);
     void refresh();
 
     void on();
@@ -47,3 +48,4 @@ private:
     SignalUpdater _updater;
 };
 #endif
+

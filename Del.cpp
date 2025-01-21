@@ -1,5 +1,10 @@
 #include "Del.h"
 
+Del::Del(SignalUpdater updater):Del()
+{
+  _updater = updater;
+}
+
 Del::Del()
 {
   _value = false;

@@ -9,9 +9,8 @@
 */
 
 #include <DelPin.h> // Pour utiliser la librairie Del
-#define PIN_LED 2 // Le numéro du port de la DEL
 
-DelPin maDEL(PIN_LED); // Initialisation de la DEL sur le port choisi
+DelPin maDEL(LED_BUILTIN); // Initialisation de la DEL sur le port choisi
 
 void setup()
 { 
