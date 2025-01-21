@@ -2,15 +2,19 @@
 
 Permet le contrôle d'une diode électroluminescente (DEL) pour Arduino. Outre son état, on peut la mettre en mode clignotant, ajuster le délai et modifier son intensité lumineuse. Son mode de fonctionnement est non-bloquant.
 
+Il existe deux classes : DelPin.h pour une DEL branchée sur une broche, et Del.h, pour contrôler une DEL virtuelle où l'utilisateur aura la responsabilité de faire le contrôle matériel correspondant.
+
 ## Utilisation
+
+Voici l'exemple simple avec une DEL branchée sur une broche.
 
 ```cpp
 
-#include <Del.h> 
+#include <DelPin.h> 
 
-const int pin = LED_BUILTIN;
+#define PIN_LED LED_BUILTIN
 
-Del maDEL(pin); 
+DelPin maDEL(PIN_LED); 
 
 void setup()
 {
@@ -29,12 +33,18 @@ void loop()
 
 ## Constructeurs
 ```cpp
-Del(int pin)
+DelPin(int pin)
 ```
 On spécifie le numéro de la broche sur lequel est branché la Del.
 
+```cpp
+Del()
+```
+Constructeur générique pour une DEL virtuelle, sans spécification matérielle. 
+
 ## Méthodes disponibles
 
+### Méthodes de Del.h
 
 ```cpp
  void refresh()
@@ -56,7 +66,6 @@ bool get()
 Permet de lire et modifier l'état de la del (allumée ou éteinte).
 
 ---
-
 ```cpp
 void setBlinking(bool value)
 bool getBlinking()
@@ -75,14 +84,36 @@ Permet de lire et modifier le temps d'intervalle du clignotement, en millisecond
 void setBrightness(float value)
 float getBrightness()
 ```
+Permet de lire et modifier l'intensité lumineuse de la del, entre 0 et 100%.
 
-Permet de lire et modifier l'intensité lumineuse de la del, entre 0 et 100%. Selon le microcontrôleur utilisé, un signal PWM est utilisé pour modifier l'intensité lumineuse produite.
+---
+```cpp
+void setSignalUpdater(SignalUpdater func)
+```
+Permet de définir une fonction de mise à jour personnalisée pour la DEL. Cette fonction est appelée à chaque fois que la DEL est mise à jour.
+
+### Méthodes de DelPin.h
+
+---
+```cpp
+void begin()
+```
+Initialise la DEL. Cette méthode doit être appelée dans la fonction setup().
+
+---
+```cpp
+int getPinNumber()
+```
+Retourne le numéro de la broche sur laquelle la DEL est connectée.
+
+---
+```cpp
+int getChannel()
+```
+Retourne le numéro du canal PWM utilisé (uniquement pour les anciennes versions d'ESP32).
 
 ---
 ```cpp
 int getAddress()
 ```
-
-Permet de lire le numéro de la broche utilisée lors de l'initialisation de l'objet.
-
----
+Permet de lire le numéro de la broche utilisée lors de l'initialisation de l'objet pour la classe DelPin.
