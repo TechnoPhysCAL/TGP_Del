@@ -95,7 +95,7 @@ Permet de lire et modifier le temps d'intervalle du clignotement, en millisecond
 void setBrightness(float value)
 float getBrightness()
 ```
-Permet de lire et modifier l'intensité lumineuse de la del, entre 0 et 100%.
+Permet de lire et modifier l'intensité lumineuse de la del, entre 0 et 100%. NOTE: Modifier l'intensité lumineuse supérieur à 0 ne va pas nécessairement allumer la DEL: il faut également faire appel à la méthode .on() ou .set(true).
 
 ---
 ```cpp
