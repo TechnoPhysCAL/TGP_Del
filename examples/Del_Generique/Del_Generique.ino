@@ -5,13 +5,13 @@
   Cet exemple permet de contrôler une DEL à l'aide de la librairie Del. La fonction de contrôle de la DEL matérielle
   est définie dans la fonction updateSignal. Cette fonction est appelée à chaque fois que la DEL est mise à jour.
 
-  Note: ###NOTE
-
+  ###NOTE
+  Dans cet exemple, la DEL est contrôlée par une fonction de mise à jour définie par l'utilisateur.
 */
 
-#include "Del.h"  //Pour utiliser la librairie Del
+#include "Del.h" // Pour utiliser la librairie Del
 #define PIN_LED 2
-Del maDEL;  // Initialisation de la DEL sur le port choisi
+Del maDEL; // Initialisation de la DEL
 
 void setup() {
   Serial.begin(115200);
@@ -21,11 +21,11 @@ void setup() {
 }
 
 void loop() {
-  maDEL.refresh();  // Permet d'actualiser l'état de la DEL. CETTE MÉTHODE EST OBLIGATOIRE EN DÉBUT DE LOOP(), IDÉALEMENT.
+  maDEL.refresh(); // Permet d'actualiser l'état de la DEL. CETTE MÉTHODE EST OBLIGATOIRE EN DÉBUT DE LOOP(), IDÉALEMENT.
 
   unsigned long curTime = millis() % 4000;
 
-  if (curTime < 1000)  // Est VRAIE durant 2.5 secondes, à chaque période de 5 secondes.
+  if (curTime < 1000) // Est VRAIE durant 1 seconde, à chaque période de 4 secondes.
   {
     maDEL.set(true);
     maDEL.setBrightness(100.0);
@@ -45,6 +45,5 @@ void loop() {
 void updateSignal(float percentage) {
   Serial.print("Je mets à jour la del ");
   Serial.println(percentage);
-  digitalWrite(PIN_LED, percentage > 0 ? HIGH : LOW); //NOTE : dans cet exemple, le pourcentage est ignoré
-
+  digitalWrite(PIN_LED, percentage > 0 ? HIGH : LOW); //NOTE : dans cet exemple, le pourcentage est ignoré 
 }
