@@ -1,21 +1,22 @@
 /*
-  Librairie TPG DEL - Une_DEL.ino
+  Librairie TPG DEL - DelPin_simple.ino
 
   ###DESCRIPTION
-
+  Cet exemple permet de contrôler une DEL à l'aide de la librairie DelPin. 
+  
   Note: ###NOTE
 
 */
 
 #include <DelPin.h> //Pour utiliser la librairie Del
-#define PIN_LED 4 //Le numéro du port de la DEL, ici la DEL par défaut sur le board.
+#define PIN_LED 2 //Le numéro du port de la DEL
 
 DelPin maDEL(PIN_LED); // Initialisation de la DEL sur le port choisi
 
 void setup()
 { 
   maDEL.begin();
-  maDEL.setBlinkingInterval(100);
+  maDEL.setBlinkingInterval(100); // Définit l'intervalle de clignotement de la DEL
 }
 
 void loop()

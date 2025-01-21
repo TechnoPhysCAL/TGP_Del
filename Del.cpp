@@ -78,15 +78,20 @@ void Del::refresh()
   {
     if (_blinking)
     {
-      _updater(((millis() % (_blinkInterval * 2)) > _blinkInterval) ? _brightness : 0.0);
+      doUpdate(((millis() % (_blinkInterval * 2)) > _blinkInterval) ? _brightness : 0.0);
     }
     else
     {
-      _updater(_brightness);
+      doUpdate(_brightness);
     }
   }
   else
   {
-    _updater(0.0);
+    doUpdate(0.0);
   }
+}
+
+void Del::doUpdate(float value)
+{
+  _updater(value);
 }

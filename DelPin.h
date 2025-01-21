@@ -34,7 +34,7 @@ public:
     int getPinNumber();
 
 private:
-    void changeState(float);
+    void doUpdate(float) override;
     int _pinNumber;
     #ifdef PATCH_OLD_ESP32
     int _channel;

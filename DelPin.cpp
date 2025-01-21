@@ -7,9 +7,6 @@ DelPin::DelPin(int pinNumber) : Del()
 #endif
 {
   _pinNumber = pinNumber;
-  auto updater = [&](float percentage)
-  { changeState(percentage); };
-  Del::setSignalUpdater(updater);
 
   #ifdef PATCH_OLD_ESP32
   static int objectCount = FIRST_CHANNEL;
@@ -40,7 +37,7 @@ void DelPin::begin()
 #else
   pinMode(DelPin::getPinNumber(), OUTPUT);
 #endif
-  DelPin::changeState(DelPin::getBrightness());
+  DelPin::doUpdate(DelPin::getBrightness());
 }
 
 int DelPin::getPinNumber()
@@ -48,7 +45,7 @@ int DelPin::getPinNumber()
   return _pinNumber;
 }
 
-void DelPin::changeState(float percentage)
+void DelPin::doUpdate(float percentage)
 {
 #if defined(PATCH_OLD_ESP32)
   ledcWrite(DelPin::getChannel(), percentage > 0 ? (int)(percentage * PWM_MAXIMUM_FACTOR) : 0.0);

@@ -36,6 +36,8 @@ public:
     void setBlinkingInterval(unsigned long);
     unsigned long getBlinkingInterval();
 
+protected:
+    virtual void doUpdate(float value);
 
 private:
     unsigned long _blinkInterval;

@@ -1,14 +1,16 @@
 /*
-  Librairie TPG DEL - Une_DEL.ino
+  Librairie TPG DEL - Del_generique.ino
 
   ###DESCRIPTION
+  Cet exemple permet de contrôler une DEL à l'aide de la librairie Del. La fonction de contrôle de la DEL matérielle
+  est définie dans la fonction updateSignal. Cette fonction est appelée à chaque fois que la DEL est mise à jour.
 
   Note: ###NOTE
 
 */
 
 #include "Del.h"  //Pour utiliser la librairie Del
-#define PIN_LED 4
+#define PIN_LED 2
 Del maDEL;  // Initialisation de la DEL sur le port choisi
 
 void setup() {
@@ -43,5 +45,6 @@ void loop() {
 void updateSignal(float percentage) {
   Serial.print("Je mets à jour la del ");
   Serial.println(percentage);
-  digitalWrite(PIN_LED, percentage > 0 ? HIGH : LOW);
+  digitalWrite(PIN_LED, percentage > 0 ? HIGH : LOW); //NOTE : dans cet exemple, le pourcentage est ignoré
+
 }
