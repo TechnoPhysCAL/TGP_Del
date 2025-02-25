@@ -12,8 +12,7 @@ Del::Del()
   _blinking = false;
   _blinkInterval = DEFAULT_BLINKING_INTERVAL;
   _brightness = DEFAULT_BRIGHTNESS;
-  _updater = [](float)
-  { ; };
+  _updater = nullptr;
 }
 
 void Del::setSignalUpdater(SignalUpdater func)
@@ -98,5 +97,8 @@ void Del::refresh()
 
 void Del::doUpdate(float value)
 {
-  _updater(value);
+  if(_updater != nullptr){
+    _updater(value);
+  }
+
 }

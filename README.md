@@ -7,6 +7,9 @@ Il existe deux classes : DelPin.h pour une DEL branchée sur une broche, et Del.
 
 ## Notes de version
 
+### 2.0.1 : 
+  - Uniformisation du pointeur de fonction pour toutes les plateformes.
+
 ### 2.0.0 : 
  - Refonte pour que Del gère les comportements virtuels et que DelPin gère une Del matérielle.
  - Permet l'utilisation de la Del générique via une fonction de référence;
